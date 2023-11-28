@@ -1,19 +1,19 @@
 import 'package:final_tech_7/component/myColor.dart';
 import 'package:final_tech_7/gen/assets.gen.dart';
-import 'package:final_tech_7/view/home_screen.dart';
+import 'package:final_tech_7/view/my_categorys.dart';
 import 'package:final_tech_7/view/profileScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+import 'home_screen.dart';
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
+final GlobalKey<ScaffoldState> _key = GlobalKey();
 
-class _MainScreenState extends State<MainScreen> {
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
-  int selectedIndex = 0;
+class MainScreen extends StatelessWidget {
+  RxInt selectedIndex = 0.obs;
+
+  MainScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -25,113 +25,108 @@ class _MainScreenState extends State<MainScreen> {
     // ];
 
     return SafeArea(
-      child: Scaffold(
-        key: _key,
-        drawer: Drawer(
-          backgroundColor: SolidColors.scaffoldBg,
+        child: Scaffold(
+      key: _key,
+      drawer: Drawer(
+        backgroundColor: SolidColors.scaffoldBg,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30, right: 30),
-              child: ListView(children: [
-                DrawerHeader(
-                    child: Center(
-                  child: Assets.images.logo.image(height: 64),
-                )),
-                ListTile(
-                  title: Text(
-                    "پروفایل کاربری",
-                    style: textTheme.bodyMedium,
-                  ),
-                  onTap: () {},
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: ListView(children: [
+              DrawerHeader(
+                  child: Center(
+                child: Assets.images.logo.image(height: 64),
+              )),
+              ListTile(
+                title: Text(
+                  "پروفایل کاربری",
+                  style: textTheme.bodyMedium,
                 ),
-                Divider(
-                  color: SolidColors.dividerColor,
+                onTap: () {},
+              ),
+              Divider(
+                color: SolidColors.dividerColor,
+              ),
+              ListTile(
+                title: Text(
+                  " درباره تکبلاگ ",
+                  style: textTheme.bodyMedium,
                 ),
-                ListTile(
-                  title: Text(
-                    " درباره تکبلاگ ",
-                    style: textTheme.bodyMedium,
-                  ),
-                  onTap: () {},
+                onTap: () {},
+              ),
+              Divider(
+                color: SolidColors.dividerColor,
+              ),
+              ListTile(
+                title: Text(
+                  " اشتراک گذاری تک بلاگ ",
+                  style: textTheme.bodyMedium,
                 ),
-                Divider(
-                  color: SolidColors.dividerColor,
+                onTap: () {},
+              ),
+              Divider(
+                color: SolidColors.dividerColor,
+              ),
+              ListTile(
+                title: Text(
+                  " تک بلاگ در گیت هاب ",
+                  style: textTheme.bodyMedium,
                 ),
-                ListTile(
-                  title: Text(
-                    " اشتراک گذاری تک بلاگ ",
-                    style: textTheme.bodyMedium,
-                  ),
-                  onTap: () {},
-                ),
-                Divider(
-                  color: SolidColors.dividerColor,
-                ),
-                ListTile(
-                  title: Text(
-                    " تک بلاگ در گیت هاب ",
-                    style: textTheme.bodyMedium,
-                  ),
-                  onTap: () {},
-                ),
-              ]),
-            ),
+                onTap: () {},
+              ),
+            ]),
           ),
         ),
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          elevation: 0,
-          backgroundColor: Colors.white,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    _key.currentState!.openDrawer();
-                  });
-                },
-                child: const Icon(
-                  Icons.menu,
-                  color: Colors.black,
-                ),
-              ),
-              Assets.images.logo.image(height: size.height / 13.6),
-
-              ///nesbat logo be safeh =>1964/144=13.6
-              const Icon(
-                Icons.search,
+      ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        elevation: 0,
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            InkWell(
+              onTap: () {
+                _key.currentState!.openDrawer();
+              },
+              child: const Icon(
+                Icons.menu,
                 color: Colors.black,
               ),
-            ],
-          ),
-        ),
-        body: Stack(
-          children: [
-            Positioned.fill(
-              child: IndexedStack(
-                index: selectedIndex,
-                children: [
-                  homeScreen(
-                      size: size, textTheme: textTheme, bodyMargin: bodyMargin),
-                  ProfileScreen(
-                      size: size, textTheme: textTheme, bodyMargin: bodyMargin),
-                ],
-              ),
             ),
-            BottomNavigation(
-              size: size,
-              changeScreen: (int value) {
-                setState(() {
-                  selectedIndex = value;
-                });
-              },
+            Assets.images.logo.image(height: size.height / 13.6),
+
+            ///nesbat logo be safeh =>1964/144=13.6
+            const Icon(
+              Icons.search,
+              color: Colors.black,
             ),
           ],
         ),
       ),
-    );
+      body: Stack(children: [
+        Positioned.fill(
+            child: Obx(
+          () => IndexedStack(
+            index: selectedIndex.value,
+            children: [
+              homeScreen(
+                  size: size, textTheme: textTheme, bodyMargin: bodyMargin),
+              ProfileScreen(
+                  size: size, textTheme: textTheme, bodyMargin: bodyMargin),
+              MyCats(),
+            ],
+          ),
+        )),
+        BottomNavigation(
+          size: size,
+          changeScreen: (value) {
+            selectedIndex.value = value;
+          },
+        )
+      ]),
+    ));
   }
 }
 
@@ -171,7 +166,9 @@ class BottomNavigation extends StatelessWidget {
               ),
               IconButton(
                 color: Colors.white,
-                onPressed: () {},
+                onPressed: () {
+                  changeScreen(2);
+                },
                 icon: const ImageIcon(
                   AssetImage("assets/icons/write.png"),
                 ),

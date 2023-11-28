@@ -1,4 +1,4 @@
-import 'package:final_tech_7/view/my_categorys.dart';
+import 'package:final_tech_7/view/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -17,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     Future.delayed(Duration(seconds: 2))
         .then((value) => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MyCats()),
+              MaterialPageRoute(builder: (context) => MainScreen()),
             ));
     super.initState();
   }
