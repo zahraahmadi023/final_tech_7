@@ -1,6 +1,6 @@
-import 'package:final_tech_7/component/myColor.dart';
-import 'package:final_tech_7/component/myString.dart';
 import 'package:final_tech_7/component/my_component.dart';
+import 'package:final_tech_7/constant/myColor.dart';
+import 'package:final_tech_7/constant/myString.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

@@ -1,9 +1,10 @@
-import 'package:final_tech_7/view/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 
-import '../component/myColor.dart';
+import '../constant/myColor.dart';
 import '../gen/assets.gen.dart';
+import '../main.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -15,10 +16,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(Duration(seconds: 2))
-        .then((value) => Navigator.of(context).pushReplacement(
-              MaterialPageRoute(builder: (context) => MainScreen()),
-            ));
+    Future.delayed(Duration(seconds: 2)).then(
+      (value) => Get.offAndToNamed(NamdeRout.routMainScreen),
+      //  Navigator.of(context).pushReplacement(
+      //       MaterialPageRoute(builder: (context) => MainScreen()),
+      //)
+    );
     super.initState();
   }
 
@@ -30,7 +33,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Assets.images.logo.image(height: 64),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             const SpinKitFadingCube(

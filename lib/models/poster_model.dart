@@ -1,16 +1,18 @@
-class PosterMoldel{
+import '../constant/api_constants.dart';
+
+class PosterMoldel {
   String? id;
   String? title;
   String? image;
   PosterMoldel({
-    required this.id,
-    required this.title,
-    required this.image,
-    
+    this.id,
+    this.title,
+    this.image,
   });
-  PosterMoldel.fromJson(Map<String,dynamic> element){////element ==name evryThing is
-    id=element["id"];
-    title=element["title"];
-    image=element["image"];
+  PosterMoldel.fromJson(Map<String, dynamic> element) {
+    ////element ==name evryThing is
+    id = element["id"];
+    title = element["title"];
+    image = ApiUrlConstants.hostUrl + element["image"];
   }
-  }
+}

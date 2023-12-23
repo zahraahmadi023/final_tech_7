@@ -1,10 +1,12 @@
-import 'package:final_tech_7/component/myColor.dart';
+import 'package:final_tech_7/constant/myColor.dart';
+import 'package:final_tech_7/controller/register_controller.dart';
 import 'package:final_tech_7/gen/assets.gen.dart';
 import 'package:final_tech_7/view/my_categorys.dart';
 import 'package:final_tech_7/view/profileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../component/dimens.dart';
 import 'home_screen.dart';
 
 final GlobalKey<ScaffoldState> _key = GlobalKey();
@@ -16,9 +18,9 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // DioServices().getMethode(ApiConstant.getHomeIteme);
     var size = MediaQuery.of(context).size;
     var textTheme = Theme.of(context).textTheme;
-    double bodyMargin = size.width / 14;
 
     // List<Widget> techMainScreenPage = [
 
@@ -45,7 +47,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 onTap: () {},
               ),
-              Divider(
+              const Divider(
                 color: SolidColors.dividerColor,
               ),
               ListTile(
@@ -55,7 +57,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 onTap: () {},
               ),
-              Divider(
+              const Divider(
                 color: SolidColors.dividerColor,
               ),
               ListTile(
@@ -65,7 +67,7 @@ class MainScreen extends StatelessWidget {
                 ),
                 onTap: () {},
               ),
-              Divider(
+              const Divider(
                 color: SolidColors.dividerColor,
               ),
               ListTile(
@@ -112,9 +114,13 @@ class MainScreen extends StatelessWidget {
             index: selectedIndex.value,
             children: [
               homeScreen(
-                  size: size, textTheme: textTheme, bodyMargin: bodyMargin),
+                  size: size,
+                  textTheme: textTheme,
+                  bodyMargin: Dimens.bodyMargin),
               ProfileScreen(
-                  size: size, textTheme: textTheme, bodyMargin: bodyMargin),
+                  size: size,
+                  textTheme: textTheme,
+                  bodyMargin: Dimens.bodyMargin),
               MyCats(),
             ],
           ),
@@ -131,12 +137,12 @@ class MainScreen extends StatelessWidget {
 }
 
 class BottomNavigation extends StatelessWidget {
-  const BottomNavigation(
-      {super.key, required this.size, required this.changeScreen});
+  BottomNavigation({super.key, required this.size, required this.changeScreen});
 
   final Size size;
   final Function(int) changeScreen;
 
+  //RegisterController _registerController = Get.put(RegisterController());
   @override
   Widget build(BuildContext context) {
     return Positioned(
@@ -167,7 +173,8 @@ class BottomNavigation extends StatelessWidget {
               IconButton(
                 color: Colors.white,
                 onPressed: () {
-                  changeScreen(2);
+                  Get.find<RegisterController>().toggleLogin();
+                  // Get.to(RegisterIntro());
                 },
                 icon: const ImageIcon(
                   AssetImage("assets/icons/write.png"),
@@ -181,7 +188,17 @@ class BottomNavigation extends StatelessWidget {
                 icon: const ImageIcon(
                   AssetImage("assets/icons/user.png"),
                 ),
-              )
+              ),
+              IconButton(
+                  color: Colors.white,
+                  onPressed: () {
+                    Get.find<RegisterController>().routoWrightBottomSheet();
+                  },
+                  icon: Icon(
+                    Icons.picture_as_pdf_outlined,
+                    size: 20,
+                    color: Colors.white,
+                  )),
             ],
           ),
         ),

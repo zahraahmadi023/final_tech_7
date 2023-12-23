@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:get/get.dart';
 
 import '../models/fake_data.dart';
-import 'myColor.dart';
+import '../view/article/articl_list_screen.dart';
+import '../controller/home_screen_controller.dart';
+import '../constant/myColor.dart';
+import '../constant/myString.dart';
+import 'text_style.dart';
 
 class Tec_Divider extends StatelessWidget {
   const Tec_Divider({
@@ -78,6 +84,7 @@ class MainTags extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    HomeScreenController homeScreenController = Get.put(HomeScreenController());
     return Container(
         height: 50,
         decoration: const BoxDecoration(
@@ -101,7 +108,9 @@ class MainTags extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                tagListName[index].title,
+                'text',
+                //   Get.find<HomeScreenController>().tagList[index].title!,
+                // homeScreenController.tagList[index].title!,
                 style: textTheme.titleSmall,
               ),
             ],
@@ -110,70 +119,41 @@ class MainTags extends StatelessWidget {
   }
 }
 
-class HomePagePoster extends StatelessWidget {
-  const HomePagePoster({
-    super.key,
-    required this.size,
-    required this.textTheme,
-  });
-
-  final Size size;
-  final TextTheme textTheme;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-            width: size.width / 1.16,
-            height: size.height / 4.2,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                  image: AssetImage(homePagePosterMap['imageAsset']),
-                  fit: BoxFit.cover),
-            ),
-            foregroundDecoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              gradient: const LinearGradient(
-                  colors: GradientColors.homePosterCoverGradiant,
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter),
+PreferredSize appBarNew(String title) {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(90),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(left: 16),
+            child: Center(
+                child: Text(
+              title,
+              style: appBarStyle,
             )),
-        Positioned(
-          bottom: 5,
-          left: 0,
-          right: 0,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                      homePagePosterMap['writer'] +
-                          '' +
-                          homePagePosterMap['date'],
-                      style: textTheme.displayMedium),
-                  Row(
-                    children: [
-                      Text(homePagePosterMap['view'],
-                          style: textTheme.displayMedium),
-                      const Icon(
-                        Icons.remove_red_eye_sharp,
-                        size: 14,
-                        color: Colors.white,
-                      )
-                    ],
-                  )
-                ],
-              ),
-              Text(homePagePosterMap['title'], style: textTheme.displayMedium)
-            ],
+          )
+        ],
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 60,
+            width: 60,
+            decoration: const BoxDecoration(
+                color: SolidColors.primaryColor, shape: BoxShape.circle),
+            child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: const Icon(Icons.keyboard_arrow_right)),
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ),
+  );
 }
 
 ////////////////
@@ -186,6 +166,55 @@ class HomePagePoster extends StatelessWidget {
 //     //log("cannot in ${uri.toString()}");
 //   }
 
-
-
 //}
+class Loading extends StatelessWidget {
+  const Loading({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SpinKitFadingCube(
+      color: SolidColors.primaryColor,
+      size: 32,
+    );
+  }
+}
+
+class SeeMoreBlog extends StatelessWidget {
+  String title;
+  SeeMoreBlog({
+    super.key,
+    required this.title,
+    required this.bodyMargin,
+    required this.textTheme,
+  });
+
+  final double bodyMargin;
+  final TextTheme textTheme;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () => Get.to(ArticleListScreen()),
+          child: Padding(
+            padding: EdgeInsets.only(right: bodyMargin),
+            child: const ImageIcon(
+              AssetImage("assets/icons/blue_pen.png"),
+              color: SolidColors.seeMore,
+            ),
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          title,
+          style: textTheme.displaySmall,
+        )
+      ],
+    );
+  }
+}

@@ -1,18 +1,17 @@
-import 'package:final_tech_7/component/myString.dart';
+import 'package:final_tech_7/constant/myString.dart';
 import 'package:final_tech_7/gen/assets.gen.dart';
-import 'package:final_tech_7/view/my_categorys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:validators/validators.dart';
 
-class RegisterIntro extends StatefulWidget {
-  const RegisterIntro({super.key});
+import '../controller/register_controller.dart';
 
-  @override
-  State<RegisterIntro> createState() => _RegisterIntroState();
-}
+class RegisterIntro extends StatelessWidget {
+  RegisterIntro({super.key});
+  // RegisterController registerController = Get.put(RegisterController());
+  var registerController = Get.find<RegisterController>();
 
-class _RegisterIntroState extends State<RegisterIntro> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -79,6 +78,7 @@ class _RegisterIntroState extends State<RegisterIntro> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
                   child: TextField(
+                    controller: registerController.emailTextEditingController,
                     onChanged: (value) {
                       isEmail(value);
                     },
@@ -91,8 +91,10 @@ class _RegisterIntroState extends State<RegisterIntro> {
                 ),
                 ElevatedButton(
                     onPressed: () {
+                      registerController.register();
                       Navigator.pop(context);
                       _activaitCodeBottomSheet(context, size, textTheme);
+                      registerController.register();
                     },
                     child: Text('ادامه '))
               ],
@@ -130,6 +132,7 @@ class _RegisterIntroState extends State<RegisterIntro> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 24, 24, 0),
                   child: TextField(
+                    controller: registerController.emailTextEditingController,
                     onChanged: (value) {
                       isEmail(value);
                     },
@@ -142,9 +145,10 @@ class _RegisterIntroState extends State<RegisterIntro> {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => MyCats(),
-                      ));
+                      registerController.verify();
+                      // Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      //   builder: (context) => MyCats(),
+                      // ));
                     },
                     child: Text('ادامه '))
               ],

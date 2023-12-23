@@ -17,7 +17,12 @@ class MyStrings {
 
 برای ارسال مطلب و پادکست باید حتما 
 ثبت نام کنی """;
-  static const String articleEmpty = """هنوز هیچ مقاله ای به جامعه گیک های فارسی 
+  static const String ArticleManage = """
+
+'هنوز مقاله  ای به جامعه گیگ  اضافه نکردی'
+""";
+  static const String articleEmpty =
+      """هنوز هیچ مقاله ای به جامعه گیک های فارسی 
 اضافه نکردی !!!""";
   static const String shareText = """
 
@@ -27,12 +32,10 @@ www.sasansafari.com
 
 """;
 
-static const String viewHottestPodcasts = " انتخاب کن";
+  static const String viewHottestPodcasts = " انتخاب کن";
 
   static const String successfulRegistration = """
 تبریک میگم ، ایمیل با موفقیت تایید شد
 لطفا اطلاعات ثبت نام رو کامل کن
 """;
-
-
 }
